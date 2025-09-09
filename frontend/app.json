@@ -10,7 +10,10 @@
     "newArchEnabled": true,
     "ios": {
       "infoPlist": {
-        "NSMicrophoneUsageDescription": "This app requires microphone access to record your voice."
+        "NSMicrophoneUsageDescription": "This app requires microphone access to record your voice.",
+        "UIBackgroundModes":[
+          "audio"
+        ]
       },
       "supportsTablet": true
     },
@@ -36,7 +39,12 @@
           "resizeMode": "contain",
           "backgroundColor": "#ffffff"
         }
-      ]
+      ],
+      ["expo-audio",
+      {
+        "microphonePermission": "This app requires microphone access to record your voice."
+      }
+    ]
     ],
     "experiments": {
       "typedRoutes": true
