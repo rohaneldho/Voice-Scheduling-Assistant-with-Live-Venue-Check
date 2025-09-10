@@ -11,9 +11,10 @@ import {
 
 interface Props {
   onRecordingComplete?: (uri: string) => void;
+  onTranscriptionComplete?: (text: string) => void; 
 }
 
-export default function MicrophoneRec({ onRecordingComplete }: Props) {
+export default function MicrophoneRec({ onRecordingComplete,onTranscriptionComplete }: Props) {
   const audioRecorder = useAudioRecorder(RecordingPresets.HIGH_QUALITY);
   const recorderState = useAudioRecorderState(audioRecorder);
   const [isRecording, setIsRecording] = useState(false);
@@ -59,7 +60,7 @@ export default function MicrophoneRec({ onRecordingComplete }: Props) {
     } as any);
 
     try {
-      const resp = await fetch('https://wisnz-122-187-117-179.a.free.pinggy.link/transcribe', {
+      const resp = await fetch('https://slqhk-122-187-117-179.a.free.pinggy.link/transcribe', {
         method: 'POST',
         headers: {
           'Content-Type': 'multipart/form-data',
@@ -70,6 +71,9 @@ export default function MicrophoneRec({ onRecordingComplete }: Props) {
       if (!resp.ok) throw new Error(`Server error: ${resp.status}`);
       const data = await resp.json();
       console.log('Upload successful:', data.message);
+      if (onTranscriptionComplete) {
+        onTranscriptionComplete(data.message);
+      }
       alert('Uploaded! Your audio has been sent for transcription.');
     } catch (err: any) {
       console.error('Upload error:', err);

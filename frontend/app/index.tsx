@@ -13,7 +13,7 @@ export default function HomeScreen() {
 
   const sendQueryToBackend = async (text: string) => {
     try {
-      const resp = await fetch('https://wisnz-122-187-117-179.a.free.pinggy.link/chat', {
+      const resp = await fetch('https://slqhk-122-187-117-179.a.free.pinggy.link/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ message: text }),
@@ -45,12 +45,21 @@ export default function HomeScreen() {
   };
 
   const onRecordingComplete = (uri: string) => {
-    setMessages(prev => [...prev, {
-      id: `${Date.now()}_voice`,
-      text: `🎤 Voice message: ${uri}`,
-      sender: 'user'
-    }]);
+    // setMessages(prev => [...prev, {
+    //   id: `${Date.now()}_voice`,
+    //   text: `🎤 Voice message: ${uri}`,
+    //   sender: 'user'
+    // }]);
   };
+
+  const onTranscriptionComplete = (text: string) => {
+  setMessages(prev => [...prev, {
+    id: `${Date.now()}_transcription`,
+    text: text,
+    sender: 'user' 
+  }]);
+  sendQueryToBackend(text);
+};
 
   const renderMessage = ({ item }: { item: { id: string; text: string; sender: 'user' | 'bot' } }) => (
     <View style={[styles.messageBubble, item.sender === 'user' ? styles.userBubble : styles.botBubble]}>
@@ -80,7 +89,7 @@ export default function HomeScreen() {
           onChangeText={setQuery}
           multiline
         />
-        <MicrophoneRec onRecordingComplete={onRecordingComplete} />
+        <MicrophoneRec onRecordingComplete={onRecordingComplete} onTranscriptionComplete={onTranscriptionComplete}/>
         <TouchableOpacity style={styles.sendButton} onPress={handleSubmit}>
           <Ionicons name="send" size={22} color="#fff" />
         </TouchableOpacity>
