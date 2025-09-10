@@ -7,6 +7,7 @@ import os
 import logging
 from openai import OpenAI
 from query import implement_rag 
+from speechToText import router as speech_router
 
 # Load environment variables
 load_dotenv()
@@ -97,3 +98,6 @@ Based on the above context and references, answer the following query:
         )
 
     return {"response": answer}
+
+
+app.include_router(speech_router)

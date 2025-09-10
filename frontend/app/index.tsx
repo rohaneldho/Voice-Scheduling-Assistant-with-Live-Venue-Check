@@ -13,7 +13,7 @@ export default function HomeScreen() {
 
   const sendQueryToBackend = async (text: string) => {
     try {
-      const resp = await fetch('https://lfect-106-76-188-190.a.free.pinggy.link/chat', {
+      const resp = await fetch('https://wisnz-122-187-117-179.a.free.pinggy.link/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ message: text }),

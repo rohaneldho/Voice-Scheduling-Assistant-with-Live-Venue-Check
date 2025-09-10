@@ -8,4 +8,4 @@ npx expo start
 ssh -p 443 -R0:127.0.0.1:8000 qr@a.pinggy.io
 
 # Backend
-uvicorn index:app --reload
+uvicorn main:app --reload
